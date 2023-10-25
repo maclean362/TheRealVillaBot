@@ -1,7 +1,8 @@
 import logging
 from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
+from telegram.ext import ApplicationBuilder, MessageHandler, filters
 import os
+
 TOKEN = os.getenv("TOKEN")
 
 logging.basicConfig(
@@ -9,13 +10,14 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+async def We(update: Update, context):
+    await context.bot.send_message(chat_id=update.effective_chat.id, text="Super John Mcginn")
 
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TOKEN).build()
     
-    start_handler = CommandHandler('start', start)
+    # Using filters.Text to filter messages by their content
+    start_handler = MessageHandler(filters.Text('Weve got Mcginn'), We)
     application.add_handler(start_handler)
     
     application.run_polling()
